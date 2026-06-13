@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base theme. The actual colors are applied by Compose's MaterialTheme; this
+         keeps the splash/system surfaces consistent before Compose takes over. -->
+    <style name="Theme.StarWars" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
