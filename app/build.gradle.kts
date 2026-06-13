@@ -64,6 +64,14 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
+    // Local cache: Room (SWAPI data is finite, so cache it once).
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // Image loading (SWAPI has no images; pulled from starwars-visualguide.com by id).
+    implementation(libs.coil.compose)
+
     // Networking: Retrofit + kotlinx.serialization for the SWAPI client.
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx.serialization)

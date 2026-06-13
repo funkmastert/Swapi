@@ -1,3 +1,61 @@
 <resources>
     <string name="app_name">StarWars</string>
+
+    <!-- Topic names -->
+    <string name="topic_films">Films</string>
+    <string name="topic_people">People</string>
+    <string name="topic_planets">Planets</string>
+    <string name="topic_vehicles">Vehicles</string>
+    <string name="topic_species">Species</string>
+    <string name="topic_starships">Starships</string>
+
+    <!-- Generic UI -->
+    <string name="cd_back">Back</string>
+    <string name="label_not_found">Not found</string>
+
+    <!-- Detail attribute labels -->
+    <string name="attr_height">Height</string>
+    <string name="attr_mass">Mass</string>
+    <string name="attr_hair_color">Hair color</string>
+    <string name="attr_skin_color">Skin color</string>
+    <string name="attr_eye_color">Eye color</string>
+    <string name="attr_birth_year">Birth year</string>
+    <string name="attr_gender">Gender</string>
+    <string name="attr_films">Films</string>
+    <string name="attr_starships">Starships</string>
+    <string name="attr_vehicles">Vehicles</string>
+    <string name="attr_planets">Planets</string>
+    <string name="attr_characters">Characters</string>
+    <string name="attr_residents">Residents</string>
+    <string name="attr_people">People</string>
+    <string name="attr_episode">Episode</string>
+    <string name="attr_director">Director</string>
+    <string name="attr_producer">Producer</string>
+    <string name="attr_release_date">Release date</string>
+    <string name="attr_climate">Climate</string>
+    <string name="attr_terrain">Terrain</string>
+    <string name="attr_population">Population</string>
+    <string name="attr_diameter">Diameter</string>
+    <string name="attr_gravity">Gravity</string>
+    <string name="attr_orbital_period">Orbital period</string>
+    <string name="attr_rotation_period">Rotation period</string>
+    <string name="attr_surface_water">Surface water</string>
+    <string name="attr_classification">Classification</string>
+    <string name="attr_designation">Designation</string>
+    <string name="attr_average_height">Average height</string>
+    <string name="attr_average_lifespan">Average lifespan</string>
+    <string name="attr_language">Language</string>
+    <string name="attr_skin_colors">Skin colors</string>
+    <string name="attr_hair_colors">Hair colors</string>
+    <string name="attr_eye_colors">Eye colors</string>
+    <string name="attr_model">Model</string>
+    <string name="attr_manufacturer">Manufacturer</string>
+    <string name="attr_class">Class</string>
+    <string name="attr_cost">Cost (credits)</string>
+    <string name="attr_length">Length</string>
+    <string name="attr_crew">Crew</string>
+    <string name="attr_passengers">Passengers</string>
+    <string name="attr_max_speed">Max speed</string>
+    <string name="attr_hyperdrive_rating">Hyperdrive rating</string>
+    <string name="attr_cargo_capacity">Cargo capacity</string>
 </resources>

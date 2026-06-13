@@ -13,21 +13,22 @@ class SwapiViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: SwapiIntent) {
         when (intent) {
-            is SwapiIntent.LoadTopic -> loadTopic(intent.topic)
+            is SwapiIntent.LoadTopic -> loadTopic(intent.topic, refresh = false)
+            is SwapiIntent.RefreshTopic -> loadTopic(intent.topic, refresh = true)
             is SwapiIntent.LoadDetails -> loadDetails(intent.topic, intent.itemId)
         }
     }
 
-    private suspend fun loadTopic(topic: SwApiType) {
-        reduce(SwapiChange.Loading)
-        runCatching { repository.getTopic(topic) }
+    private suspend fun loadTopic(topic: SwApiType, refresh: Boolean) {
+        reduce(if (refresh) SwapiChange.Refreshing else SwapiChange.Loading)
+        runCatching { repository.getTopic(topic, forceRefresh = refresh) }
             .onSuccess { reduce(SwapiChange.TopicLoaded(topic, it)) }
             .onFailure(::fail)
     }
 
     private suspend fun loadDetails(topic: SwApiType, itemId: String) {
         reduce(SwapiChange.Loading)
-        runCatching { repository.getItem(topic, itemId) }
+        runCatching { repository.getDetail(topic, itemId) }
             .onSuccess { reduce(SwapiChange.DetailLoaded(it)) }
             .onFailure(::fail)
     }

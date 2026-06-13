@@ -1,7 +1,6 @@
 package com.example.starwars.feature.screens
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,18 +16,21 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.starwars.R
 import com.example.starwars.core.ui.EffectHandler
+import com.example.starwars.core.ui.titleRes
 import com.example.starwars.domain.model.SwApiType
 import com.example.starwars.domain.model.SwItem
-import com.example.starwars.domain.model.prettyName
 import com.example.starwars.feature.swapi.SwapiEffect
 import com.example.starwars.feature.swapi.SwapiIntent
 import com.example.starwars.feature.swapi.SwapiViewModel
@@ -60,6 +62,8 @@ fun ItemsRoute(
         topic = topic,
         items = state.items,
         isLoading = state.isLoading,
+        isRefreshing = state.isRefreshing,
+        onRefresh = { viewModel.onIntent(SwapiIntent.RefreshTopic(topic)) },
         onItemClick = onItemClick,
         onBack = onBack,
     )
@@ -71,22 +75,29 @@ fun ItemsScreen(
     topic: SwApiType,
     items: List<SwItem>,
     isLoading: Boolean,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
     onItemClick: (itemId: String) -> Unit,
     onBack: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(topic.prettyName()) },
+                title = { Text(stringResource(topic.titleRes())) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.cd_back),
+                        )
                     }
                 },
             )
         },
     ) { padding ->
-        Box(
+        PullToRefreshBox(
+            isRefreshing = isRefreshing,
+            onRefresh = onRefresh,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
@@ -121,6 +132,8 @@ private fun ItemsScreenPreview() {
             SwItem("2", "C-3PO", SwApiType.PEOPLE),
         ),
         isLoading = false,
+        isRefreshing = false,
+        onRefresh = {},
         onItemClick = {},
         onBack = {},
     )
