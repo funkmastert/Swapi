@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.starwars.feature.swapi.SwapiRoute
+import com.example.starwars.core.navigation.SwNavHost
 import com.example.starwars.ui.theme.StarWarsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StarWarsTheme {
-                SwapiRoute()
+                SwNavHost()
             }
         }
     }
