@@ -1,11 +1,9 @@
 package com.example.starwars.feature.swapi
 
-import androidx.lifecycle.viewModelScope
 import com.example.starwars.core.mvi.MviViewModel
+import com.example.starwars.domain.model.SwApiType
 import com.example.starwars.domain.repository.SwapiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,21 +11,34 @@ class SwapiViewModel @Inject constructor(
     private val repository: SwapiRepository,
 ) : MviViewModel<SwapiIntent, SwapiState, SwapiEffect>(initialState = SwapiState()) {
 
-    init {
-        repository.observeSw()
-            .onEach {
-                todos -> setState {
-                    SwapiReducer.reduce(this, SwapiChange.DataLoaded(todos))
-                }
-            }
-            .launchIn(viewModelScope)
-    }
-
     override suspend fun handleIntent(intent: SwapiIntent) {
         when (intent) {
-            is SwapiIntent.ShowDetails -> TODO()
+            is SwapiIntent.LoadTopic -> loadTopic(intent.topic)
+            is SwapiIntent.LoadDetails -> loadDetails(intent.topic, intent.itemId)
         }
     }
 
-    private fun reduce(change: SwapiChange) = setState { SwapiReducer.reduce(this, change) }
+    private suspend fun loadTopic(topic: SwApiType) {
+        reduce(SwapiChange.Loading)
+        runCatching { repository.getTopic(topic) }
+            .onSuccess { reduce(SwapiChange.TopicLoaded(topic, it)) }
+            .onFailure(::fail)
+    }
+
+    private suspend fun loadDetails(topic: SwApiType, itemId: String) {
+        reduce(SwapiChange.Loading)
+        runCatching { repository.getItem(topic, itemId) }
+            .onSuccess { reduce(SwapiChange.DetailLoaded(it)) }
+            .onFailure(::fail)
+    }
+
+    private fun fail(t: Throwable) {
+        val message = t.message ?: "Something went wrong"
+        reduce(SwapiChange.Failed(message))
+        sendEffect(SwapiEffect.ShowError(message))
+    }
+
+    private fun reduce(change: SwapiChange) = setState {
+        SwapiReducer.reduce(this, change)
+    }
 }

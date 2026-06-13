@@ -1,5 +1,6 @@
 package com.example.starwars.core.navigation
 
+import com.example.starwars.domain.model.SwApiType
 import kotlinx.serialization.Serializable
 
 /**
@@ -17,9 +18,9 @@ sealed interface Destination {
 
     /** The items inside one topic. */
     @Serializable
-    data class Items(val topicId: String) : Destination
+    data class Items(val topicId: SwApiType) : Destination
 
     /** Full details of a single item within a topic. */
     @Serializable
-    data class Detail(val topicId: String, val itemId: String) : Destination
+    data class Detail(val topicId: SwApiType, val itemId: String) : Destination
 }
